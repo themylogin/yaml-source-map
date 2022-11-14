@@ -78,8 +78,31 @@ def mapping(*, loader: yaml.Loader) -> types.TSourceMapEntries:
         key_value = key_value_token.value
 
         # Retrieve values
-        assert isinstance(loader.get_token(), yaml.ValueToken)
-        value_entries = iter(value(loader=loader))
+        value_token = loader.get_token()
+        assert isinstance(value_token, yaml.ValueToken)
+
+        if isinstance(loader.peek_token(), (yaml.BlockEndToken, yaml.KeyToken)):
+            # Key without any value specified
+            value_entries = iter([
+                (
+                    "",
+                    types.Entry(
+                        value_start=types.Location(
+                            value_token.start_mark.line,
+                            value_token.start_mark.column,
+                            value_token.start_mark.index,
+                        ),
+                        value_end=types.Location(
+                            value_token.end_mark.line,
+                            value_token.end_mark.column,
+                            value_token.end_mark.index,
+                        ),
+                    ),
+                )
+            ])
+        else:
+            value_entries = iter(value(loader=loader))
+
         value_entry = next(value_entries)
 
         # Write pointers
