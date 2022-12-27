@@ -67,6 +67,8 @@ class Entry:
     value_end: Location
     key_start: typing.Optional[Location] = None
     key_end: typing.Optional[Location] = None
+    plain: typing.Optional[bool] = None
+    style: typing.Optional[str] = None
 
 
 TSourceMapEntries = typing.List[typing.Tuple[str, Entry]]

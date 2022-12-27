@@ -224,6 +224,8 @@ def primitive(*, loader: yaml.Loader) -> types.TSourceMapEntries:
                     token.end_mark.column,
                     token.end_mark.index,
                 ),
+                plain=token.plain,
+                style=token.style,
             ),
         )
     ]
