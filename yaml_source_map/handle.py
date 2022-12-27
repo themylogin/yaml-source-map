@@ -114,6 +114,8 @@ def mapping(*, loader: yaml.Loader) -> types.TSourceMapEntries:
                     value_end=value_entry[1].value_end,
                     key_start=key_start,
                     key_end=key_end,
+                    plain=value_entry[1].plain,
+                    style=value_entry[1].style,
                 ),
             )
         )
